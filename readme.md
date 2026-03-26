@@ -13,4 +13,4 @@ Dela Cruz, Patrick Audine D.           Programmer
      It allows users—both administrators and tenants—to efficiently record payments, monitor due dates, maintain accurate tenant information, and generate comprehensive payment reports. By moving away from traditional, manual methods like pen-and-paper ledgers or basic spreadsheets, the system aims to significantly reduce common human errors, enhance transaction transparency, and make the entire payment process faster, more reliable, and convenient for everyone involved.
 
 
-     Hi Guyss
+     This is kenneth!, checking for commit
