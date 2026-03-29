@@ -4,26 +4,23 @@
 
 @section('content')
     <div class="header">
-        <h1>Dashboard</h1>
-        <div class="btn-group">
-            <button class="btn-add">Add New Tenant</button>
-            <button class="btn-process">Process Payment</button>
-        </div>
+        <h1>Admin Dashboard</h1>
+        <button style="background: #5D4037; color: white; padding: 10px; border: none; border-radius: 5px;">+ Add Tenant</button>
     </div>
 
     <div class="stats-container">
         <div class="stat-card">
-            <h3>Total Due (Oct)</h3>
+            <h3>Total Due</h3>
             <p>{{ $stats['total_due'] }}</p>
         </div>
         <div class="stat-card">
-            <h3>Collected (Oct)</h3>
+            <h3>Collected</h3>
             <p>{{ $stats['collected'] }}</p>
         </div>
     </div>
 
     <div class="section-card">
-        <h2>Upcoming Due Dates</h2>
+        <h2>Upcoming Dues</h2>
         <table>
             <thead>
                 <tr>
@@ -31,7 +28,6 @@
                     <th>Status</th>
                     <th>Amount</th>
                     <th>Room</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,10 +37,6 @@
                     <td><span class="badge {{ strtolower($due['status']) }}">{{ $due['status'] }}</span></td>
                     <td>{{ $due['amount'] }}</td>
                     <td>{{ $due['room'] }}</td>
-                    <td>
-                        <button class="btn-edit">Edit</button>
-                        <button class="btn-delete">Delete</button>
-                    </td>
                 </tr>
                 @endforeach
             </tbody>
