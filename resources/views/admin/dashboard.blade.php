@@ -77,16 +77,6 @@
             </thead>
             <tbody>
                 @foreach($upcomingDues as $due)
-<<<<<<< HEAD
-                <tr>
-                    <td>{{ $due['date'] }}</td>
-                    <td><span class="badge {{ strtolower($due['status']) }}">{{ $due['status'] }}</span></td>
-                    <td>{{ $due['amount'] }}</td>
-                    <td>{{ $due['room'] }}</td>
-                    <td>
-                        <button class="btn-edit">Edit</button>
-                        <button class="btn-delete">Delete</button>
-=======
                 <tr style="border-bottom: 1px solid #f8f9fa;">
                     <td style="padding: 15px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
@@ -105,15 +95,12 @@
                             color: {{ $due['status'] == 'Paid' ? '#00b894' : '#ff7675' }}; border: 1px solid currentColor;">
                             {{ strtoupper($due['status']) }}
                         </span>
->>>>>>> client
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-<<<<<<< HEAD
-=======
 
     <div style="display: flex; flex-direction: column; gap: 25px;">
         <div class="card" style="background: var(--primary); color: white;">
@@ -141,5 +128,4 @@
         </div>
     </div>
 </div>
->>>>>>> client
 @endsection
