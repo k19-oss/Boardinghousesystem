@@ -92,5 +92,4 @@
         <i class="fas fa-power-off"></i> Logout
     </a>
 </div>
-
 @endsection
