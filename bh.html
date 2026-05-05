@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPK Boarding House - Tenant Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8B5E3C;
+            --primary-dark: #6B4423;
+            --primary-light: #C4A882;
+            --secondary: #A67B5B;
+            --accent: #D4A574;
+            --bg-cream: #F5EDE0;
+            --bg-light: #FAF6F0;
+            --bg-card: #FFFDF9;
+            --text-dark: #3D2B1F;
+            --text-medium: #6B5344;
+            --text-light: #9C8B7A;
+            --success: #5A8F6E;
+            --warning: #C9A84C;
+            --danger: #B85450;
+            --border: #E8DDD0;
+            --shadow: rgba(61, 43, 31, 0.08);
+            --shadow-lg: rgba(61, 43, 31, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ===== AUTHENTICATION LAYER ===== */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--primary-light) 100%);
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px var(--shadow-lg);
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-logo i {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .auth-logo h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+        }
+
+        .auth-logo p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-medium);
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(139, 94, 60, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 94, 60, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 94, 60, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            margin-top: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: var(--text-light);
+            font-size: 13px;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .auth-divider span {
+            padding: 0 15px;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ===== DASHBOARD LAYER ===== */
+        .dashboard-container {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 260px;
+            background: linear-gradient(180deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 30px 0;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 25px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-brand i {
+            font-size: 28px;
+        }
+
+        .sidebar-brand h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .sidebar-brand span {
+            font-size: 11px;
+            opacity: 0.8;
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0 15px;
+        }
+
+        .nav-item {
+            margin-bottom: 4px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 18px;
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 25px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .user-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .user-info p {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            padding: 30px 40px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-medium);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 18px;
+            height: 18px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px var(--shadow-lg);
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+
+        .balance-card .card-label {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .balance-card .card-value {
+            color: white;
+            font-size: 42px;
+        }
+
+        .balance-card .card-subtitle {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .card-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .card-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .icon-primary { background: rgba(139, 94, 60, 0.1); color: var(--primary); }
+        .icon-success { background: rgba(90, 143, 110, 0.1); color: var(--success); }
+        .icon-warning { background: rgba(201, 168, 76, 0.1); color: var(--warning); }
+        .icon-danger { background: rgba(184, 84, 80, 0.1); color: var(--danger); }
+
+        .btn-pay {
+            margin-top: 20px;
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-pay:hover {
+            background: var(--bg-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Bills Section */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bills-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .bill-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .bill-item:hover {
+            border-color: var(--primary-light);
+            background: white;
+        }
+
+        .bill-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .bill-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .bill-details h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .bill-details p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .bill-amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Payment Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(61, 43, 31, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 60px var(--shadow-lg);
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 24px 30px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: none;
+            background: var(--bg-light);
+            color: var(--text-medium);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .modal-body {
+            padding: 24px 30px;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover,
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(139, 94, 60, 0.03);
+        }
+
+        .payment-method input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+
+        .payment-method-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .payment-method-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .payment-method-info p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .amount-display {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .amount-display .label {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .amount-display .value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Transaction History */
+        .transactions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .transactions-table th {
+            text-align: left;
+            padding: 14px 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .transactions-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .transactions-table tr:hover td {
+            background: var(--bg-light);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-paid {
+            background: rgba(90, 143, 110, 0.1);
+            color: var(--success);
+        }
+
+        .status-pending {
+            background: rgba(201, 168, 76, 0.1);
+            color: var(--warning);
+        }
+
+        .status-failed {
+            background: rgba(184, 84, 80, 0.1);
+            color: var(--danger);
+        }
+
+        .receipt-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .receipt-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Maintenance Section */
+        .maintenance-form {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(139, 94, 60, 0.1);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            background: var(--bg-light);
+            cursor: pointer;
+        }
+
+        .ticket-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ticket-item {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 10px var(--shadow);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .ticket-title {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .ticket-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .ticket-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--text-dark);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility */
+        .hidden { display: none !important; }
+        .mt-4 { margin-top: 24px; }
+        .mb-4 { margin-bottom: 24px; }
+    </style>
+</head>
+<body>
+
+    <!-- AUTHENTICATION LAYER -->
+    <div id="authLayer" class="auth-container">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <i class="fas fa-home"></i>
+                <h1>IPK Boarding House</h1>
+                <p>Your Home, Your Comfort</p>
+            </div>
+            
+            <div id="loginForm">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="tenant@example.com" value="john.doe@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Enter your password" value="password123">
+                </div>
+                <button class="btn btn-primary" onclick="login()">
+                    <i class="fas fa-sign-in-alt"></i> Log In
+                </button>
+                
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+                
+                <button class="btn btn-secondary" onclick="showRegister()">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+                
+                <div class="auth-footer">
+                    <a href="#">Forgot password?</a>
+                </div>
+            </div>
+            
+            <div id="registerForm" class="hidden">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="tenant@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" placeholder="+1 234 567 890">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" placeholder="Confirm your password">
+                </div>
+                <button class="btn btn-primary" onclick="register()">
+                    <i class="fas fa-user-check"></i> Register
+                </button>
+                
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+                
+                <button class="btn btn-secondary" onclick="showLogin()">
+                    <i class="fas fa-arrow-left"></i> Back to Login
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD LAYER -->
+    <div id="dashboardLayer" class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <i class="fas fa-home"></i>
+                    <div>
+                        <h2>IPK House</h2>
+                        <span>Tenant Portal</span>
+                    </div>
+                </div>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a class="nav-link active" onclick="navigateTo('dashboard')">
+                        <i class="fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="navigateTo('bills')">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <span>My Bills</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="navigateTo('payments')">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Payments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="navigateTo('history')">
+                        <i class="fas fa-history"></i>
+                        <span>Transaction History</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="navigateTo('maintenance')">
+                        <i class="fas fa-tools"></i>
+                        <span>Maintenance</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="navigateTo('messages')">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">JD</div>
+                    <div class="user-info">
+                        <h4>John Doe</h4>
+                        <p>Room 102</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- DASHBOARD PAGE -->
+            <div id="page-dashboard" class="page-content">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Welcome Back, John!</h1>
+                        <p>Here's what's happening with your account</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="icon-btn" onclick="showToast('No new notifications')">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <button class="icon-btn" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Balance Card -->
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-label">Current Balance</div>
+                                <div class="card-value">$750.00</div>
+                                <div class="card-subtitle">Due Oct 15, 2026</div>
+                            </div>
+                            <div class="card-icon icon-primary" style="background: rgba(255,255,255,0.2); color: white;">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                        </div>
+                        <button class="btn-pay" onclick="openPaymentModal()">
+                            <i class="fas fa-credit-card"></i> Make Payment
+                        </button>
+                    </div>
+
+                    <!-- Next Due Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-label">Next Payment Due</div>
+                                <div class="card-value" style="font-size: 28px;">Oct 15</div>
+                                <div class="card-subtitle">10 days remaining</div>
+                            </div>
+                            <div class="card-icon icon-warning">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Last Payment Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-label">Last Payment</div>
+                                <div class="card-value" style="font-size: 28px;">$750</div>
+                                <div class="card-subtitle">Paid on Sep 15, 2026</div>
+                            </div>
+                            <div class="card-icon icon-success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Latest Bills -->
+                <h2 class="section-title">
+                    <i class="fas fa-file-invoice"></i>
+                    Your Latest Bills
+                </h2>
+                <div class="card">
+                    <div class="bills-list">
+                        <div class="bill-item">
+                            <div class="bill-info">
+                                <div class="bill-icon icon-primary">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <div class="bill-details">
+                                    <h4>Monthly Rent</h4>
+                                    <p>Room 102 - October 2026</p>
+                                </div>
+                            </div>
+                            <div class="bill-amount">$500.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-info">
+                                <div class="bill-icon icon-success">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="bill-details">
+                                    <h4>Electricity</h4>
+                                    <p>Sep 01 - Sep 30, 2026</p>
+                                </div>
+                            </div>
+                            <div class="bill-amount">$150.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-info">
+                                <div class="bill-icon icon-warning">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <div class="bill-details">
+                                    <h4>Water</h4>
+                                    <p>Sep 01 - Sep 30, 2026</p>
+                                </div>
+                            </div>
+                            <div class="bill-amount">$50.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-info">
+                                <div class="bill-icon icon-danger">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <div class="bill-details">
+                                    <h4>Internet</h4>
+                                    <p>Oct 01 - Oct 31, 2026</p>
+                                </div>
+                            </div>
+                            <div class="bill-amount">$50.00</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary mt-4" onclick="navigateTo('bills')">
+                        <i class="fas fa-list"></i> View All Bills
+                    </button>
+                </div>
+            </div>
+
+            <!-- BILLS PAGE -->
+            <div id="page-bills" class="page-content hidden">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>My Bills</h1>
+                        <p>View and manage all your bills</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="bills-list">
+                        <div class="bill-item">
+                            <div class="bill-info">
+                                <div class="bill-icon icon-primary">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <div class="bill-details">
+                                    <h4>Monthly Rent - October 2026</h4>
+                                    <p>Due: Oct 15, 2026</p>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="bill-amount">$500.00</div>
+                                <span class="status-badge status-pending">
+                                    <i class="fas fa-clock"></i> Pending
+                                </span>
+                            </div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-info">
+                                <div class="bill-icon icon-success">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="bill-details">
+                                    <h4>Electricity - September 2026</h4>
+                                    <p>Due: Oct 15, 2026</p>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="bill-amount">$150.00</div>
+                                <span class="status-badge status-pending">
+                                    <i class="fas fa-clock"></i> Pending
+                                </span>
+                            </div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-info">
+                                <div class="bill-icon icon-warning">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <div class="bill-details">
+                                    <h4>Water - September 2026</h4>
+                                    <p>Due: Oct 15, 2026</p>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="bill-amount">$50.00</div>
+                                <span class="status-badge status-pending">
+                                    <i class="fas fa-clock"></i> Pending
+                                </span>
+                            </div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-info">
+                                <div class="bill-icon icon-danger">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <div class="bill-details">
+                                    <h4>Internet - October 2026</h4>
+                                    <p>Due: Oct 15, 2026</p>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="bill-amount">$50.00</div>
+                                <span class="status-badge status-pending">
+                                    <i class="fas fa-clock"></i> Pending
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 24px; text-align: center;">
+                        <button class="btn btn-primary" onclick="openPaymentModal()" style="max-width: 300px;">
+                            <i class="fas fa-credit-card"></i> Pay All Bills
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAYMENTS PAGE -->
+            <div id="page-payments" class="page-content hidden">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Make Payment</h1>
+                        <p>Choose your preferred payment method</p>
+                    </div>
+                </div>
+                <div class="card" style="max-width: 600px;">
+                    <div class="amount-display">
+                        <div class="label">Total Amount Due</div>
+                        <div class="value">$750.00</div>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 16px; font-size: 16px;">Select Payment Method</h3>
+                    <div class="payment-methods">
+                        <div class="payment-method selected" onclick="selectPayment(this)">
+                            <input type="radio" name="payment" checked>
+                            <div class="payment-method-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="payment-method-info">
+                                <h4>GCash</h4>
+                                <p>Pay using GCash wallet</p>
+                            </div>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment(this)">
+                            <input type="radio" name="payment">
+                            <div class="payment-method-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="payment-method-info">
+                                <h4>Maya</h4>
+                                <p>Pay using Maya wallet</p>
+                            </div>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment(this)">
+                            <input type="radio" name="payment">
+                            <div class="payment-method-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div class="payment-method-info">
+                                <h4>Bank Transfer</h4>
+                                <p>Direct bank transfer</p>
+                            </div>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment(this)">
+                            <input type="radio" name="payment">
+                            <div class="payment-method-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="payment-method-info">
+                                <h4>Cash Payment</h4>
+                                <p>Pay at the admin office</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="processPayment()">
+                        <i class="fas fa-lock"></i> Pay $750.00 Securely
+                    </button>
+                </div>
+            </div>
+
+            <!-- HISTORY PAGE -->
+            <div id="page-history" class="page-content hidden">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Transaction History</h1>
+                        <p>View all your past transactions and receipts</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <table class="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>#TRX-2026-089</strong></td>
+                                <td>Sep 15, 2026</td>
+                                <td>Monthly Rent - Sep 2026</td>
+                                <td><strong>$500.00</strong></td>
+                                <td><span class="status-badge status-paid"><i class="fas fa-check"></i> Paid</span></td>
+                                <td><button class="receipt-btn"><i class="fas fa-download"></i> Receipt</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>#TRX-2026-088</strong></td>
+                                <td>Sep 15, 2026</td>
+                                <td>Electricity - Aug 2026</td>
+                                <td><strong>$145.00</strong></td>
+                                <td><span class="status-badge status-paid"><i class="fas fa-check"></i> Paid</span></td>
+                                <td><button class="receipt-btn"><i class="fas fa-download"></i> Receipt</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>#TRX-2026-087</strong></td>
+                                <td>Sep 15, 2026</td>
+                                <td>Water - Aug 2026</td>
+                                <td><strong>$48.00</strong></td>
+                                <td><span class="status-badge status-paid"><i class="fas fa-check"></i> Paid</span></td>
+                                <td><button class="receipt-btn"><i class="fas fa-download"></i> Receipt</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>#TRX-2026-086</strong></td>
+                                <td>Aug 15, 2026</td>
+                                <td>Monthly Rent - Aug 2026</td>
+                                <td><strong>$500.00</strong></td>
+                                <td><span class="status-badge status-paid"><i class="fas fa-check"></i> Paid</span></td>
+                                <td><button class="receipt-btn"><i class="fas fa-download"></i> Receipt</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>#TRX-2026-085</strong></td>
+                                <td>Aug 15, 2026</td>
+                                <td>Internet - Aug 2026</td>
+                                <td><strong>$50.00</strong></td>
+                                <td><span class="status-badge status-paid"><i class="fas fa-check"></i> Paid</span></td>
+                                <td><button class="receipt-btn"><i class="fas fa-download"></i> Receipt</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>#TRX-2026-084</strong></td>
+                                <td>Jul 15, 2026</td>
+                                <td>Monthly Rent - Jul 2026</td>
+                                <td><strong>$500.00</strong></td>
+                                <td><span class="status-badge status-paid"><i class="fas fa-check"></i> Paid</span></td>
+                                <td><button class="receipt-btn"><i class="fas fa-download"></i> Receipt</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- MAINTENANCE PAGE -->
+            <div id="page-maintenance" class="page-content hidden">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Maintenance Requests</h1>
+                        <p>Submit and track maintenance tickets</p>
+                    </div>
+                </div>
+                
+                <div class="maintenance-form">
+                    <h3 style="margin-bottom: 20px; font-size: 18px;">
+                        <i class="fas fa-plus-circle" style="color: var(--primary);"></i> Submit New Request
+                    </h3>
+                    <div class="form-group">
+                        <label>Issue Category</label>
+                        <select class="form-select">
+                            <option>Plumbing</option>
+                            <option>Electrical</option>
+                            <option>Appliance Repair</option>
+                            <option>Furniture</option>
+                            <option>Cleaning</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-textarea" placeholder="Describe the issue in detail..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="submitTicket()" style="max-width: 200px;">
+                        <i class="fas fa-paper-plane"></i> Submit Request
+                    </button>
+                </div>
+
+                <h2 class="section-title">
+                    <i class="fas fa-clipboard-list"></i>
+                    Recent Tickets
+                </h2>
+                <div class="ticket-list">
+                    <div class="ticket-item">
+                        <div class="ticket-header">
+                            <div>
+                                <div class="ticket-title">Leaking Faucet in Bathroom</div>
+                                <div class="ticket-meta">
+                                    <span><i class="fas fa-hashtag"></i> #MNT-2026-042</span>
+                                    <span><i class="fas fa-calendar"></i> Oct 02, 2026</span>
+                                </div>
+                            </div>
+                            <span class="status-badge status-pending">
+                                <i class="fas fa-clock"></i> In Progress
+                            </span>
+                        </div>
+                        <p style="color: var(--text-medium); font-size: 14px;">The bathroom sink faucet is dripping continuously. Needs washer replacement.</p>
+                    </div>
+                    <div class="ticket-item">
+                        <div class="ticket-header">
+                            <div>
+                                <div class="ticket-title">AC Not Cooling Properly</div>
+                                <div class="ticket-meta">
+                                    <span><i class="fas fa-hashtag"></i> #MNT-2026-038</span>
+                                    <span><i class="fas fa-calendar"></i> Sep 28, 2026</span>
+                                </div>
+                            </div>
+                            <span class="status-badge status-paid">
+                                <i class="fas fa-check"></i> Resolved
+                            </span>
+                        </div>
+                        <p style="color: var(--text-medium); font-size: 14px;">Air conditioner was not cooling. Filter cleaned and refrigerant refilled.</p>
+                    </div>
+                    <div class="ticket-item">
+                        <div class="ticket-header">
+                            <div>
+                                <div class="ticket-title">Broken Window Lock</div>
+                                <div class="ticket-meta">
+                                    <span><i class="fas fa-hashtag"></i> #MNT-2026-035</span>
+                                    <span><i class="fas fa-calendar"></i> Sep 20, 2026</span>
+                                </div>
+                            </div>
+                            <span class="status-badge status-paid">
+                                <i class="fas fa-check"></i> Resolved
+                            </span>
+                        </div>
+                        <p style="color: var(--text-medium); font-size: 14px;">Window lock mechanism was broken. Replaced with new lock set.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MESSAGES PAGE -->
+            <div id="page-messages" class="page-content hidden">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Messages</h1>
+                        <p>Communicate with management</p>
+                    </div>
+                </div>
+                <div class="card" style="text-align: center; padding: 60px 20px;">
+                    <i class="fas fa-envelope-open-text" style="font-size: 64px; color: var(--border); margin-bottom: 20px;"></i>
+                    <h3 style="color: var(--text-medium); margin-bottom: 10px;">No Messages Yet</h3>
+                    <p style="color: var(--text-light);">Your inbox is empty. Messages from management will appear here.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- PAYMENT MODAL -->
+    <div id="paymentModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Make Payment</h2>
+                <button class="modal-close" onclick="closePaymentModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="amount-display">
+                    <div class="label">Amount to Pay</div>
+                    <div class="value">$750.00</div>
+                </div>
+                
+                <h3 style="margin-bottom: 16px; font-size: 16px;">Select Payment Method</h3>
+                <div class="payment-methods">
+                    <div class="payment-method selected" onclick="selectPayment(this)">
+                        <input type="radio" name="modalPayment" checked>
+                        <div class="payment-method-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="payment-method-info">
+                            <h4>GCash</h4>
+                            <p>Pay using GCash wallet</p>
+                        </div>
+                    </div>
+                    <div class="payment-method" onclick="selectPayment(this)">
+                        <input type="radio" name="modalPayment">
+                        <div class="payment-method-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="payment-method-info">
+                            <h4>Maya</h4>
+                            <p>Pay using Maya wallet</p>
+                        </div>
+                    </div>
+                    <div class="payment-method" onclick="selectPayment(this)">
+                        <input type="radio" name="modalPayment">
+                        <div class="payment-method-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="payment-method-info">
+                            <h4>Bank Transfer</h4>
+                            <p>Direct bank transfer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Reference Number (Optional)</label>
+                    <input type="text" placeholder="Enter reference number">
+                </div>
+                
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea class="form-textarea" style="min-height: 80px;" placeholder="Add any notes..."></textarea>
+                </div>
+                
+                <button class="btn btn-primary" onclick="processPayment()">
+                    <i class="fas fa-lock"></i> Confirm Payment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        <div>
+            <div style="font-weight: 600;">Success</div>
+            <div id="toastMessage" style="font-size: 13px; opacity: 0.9;">Operation completed successfully</div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        function navigateTo(page) {
+            document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('page-' + page).classList.remove('hidden');
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            event.target.closest('.nav-link').classList.add('active');
+        }
+
+        // Auth
+        function showRegister() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+        }
+
+        function showLogin() {
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+        }
+
+        function login() {
+            document.getElementById('authLayer').style.display = 'none';
+            document.getElementById('dashboardLayer').style.display = 'block';
+            showToast('Welcome back, John!');
+        }
+
+        function register() {
+            showToast('Account created successfully!');
+            setTimeout(() => {
+                showLogin();
+            }, 1500);
+        }
+
+        function logout() {
+            document.getElementById('dashboardLayer').style.display = 'none';
+            document.getElementById('authLayer').style.display = 'flex';
+            showToast('Logged out successfully');
+        }
+
+        // Payment Modal
+        function openPaymentModal() {
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        function selectPayment(el) {
+            document.querySelectorAll('.payment-method').forEach(pm => {
+                pm.classList.remove('selected');
+                pm.querySelector('input[type="radio"]').checked = false;
+            });
+            el.classList.add('selected');
+            el.querySelector('input[type="radio"]').checked = true;
+        }
+
+        function processPayment() {
+            closePaymentModal();
+            showToast('Payment processed successfully! Receipt sent to your email.');
+        }
+
+        // Maintenance
+        function submitTicket() {
+            showToast('Maintenance request submitted successfully!');
+            document.querySelector('.form-textarea').value = '';
+        }
+
+        // Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Close modal on overlay click
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) closePaymentModal();
+        });
+    </script>
+</body>
+</html>
