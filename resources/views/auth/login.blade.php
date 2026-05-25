@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Cozy Habitat</title>
+    <title>Admin Login - IPK Boardinghouse</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -181,7 +181,7 @@
 <body>
 
     <div class="login-card">
-        <div class="brand-title">Cozy Habitat</div>
+        <div class="brand-title">IPK Boardinghouse</div>
         <div class="brand-subtitle">Administrative Console</div>
         
         <form action="{{ route('admin.login.submit') }}" method="POST">

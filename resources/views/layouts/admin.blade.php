@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cozy Habitat - @yield('title')</title>
+    <title>IPK Boardinghouse System - @yield('title')</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            /* --- Cozy Habitat 60-30-10 Rule Palette --- */
+            /* --- IPK boardinghouse System 60-30-10 Rule Palette --- */
             --primary: #3E2723;       /* 60% Dominant Color (Deep Rich Espresso Brown) */
             --secondary: #5D4037;     /* Secondary Supportive Accent (Warm Coffee) */
             --accent: #E91E63;        /* 10% Core Highlight Badge Color */
@@ -139,7 +139,7 @@
     <aside class="sidebar">
         <div class="logo-section">
             <i class="fa-solid fa-house-user"></i>
-            <span>COZY HABITAT</span>
+            <span>IPK Boardinghouse</span>
         </div>
 
         <nav class="nav-container">

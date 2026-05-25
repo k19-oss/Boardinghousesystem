@@ -27,11 +27,15 @@
                 <option value="" disabled selected>Select an available room...</option>
                 <option value="101">Room 101 (Premium Solo)</option>
                 <option value="102">Room 102 (Bedspace)</option>
+                <option value="103">Room 103</option>
+                <option value="201">Room 201</option>
+                <option value="202">Room 202</option>
+                <option value="203">Room 203</option>
             </select>
         </div>
 
-        <button type="submit" class="btn-primary" style="background: var(--primary); color: white; padding: 14px; border-radius: 10px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; text-align: center; justify-content: center; margin-top: 10px;">
-            <i class="fa-solid fa-user-check"></i> Complete Registration
+        <button type="submit" class="btn-primary" style="background: var(--primary); color: white; padding: 14px; border-radius: 10px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <i class="fa-solid fa-user-plus"></i> Complete Registration
         </button>
     </form>
 </div>
