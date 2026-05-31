@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>IPK Boardinghouse System - @yield('title')</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,6 +22,8 @@
             --card-bg: #ffffff;
             --sidebar-width: 280px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --success: #10b981;
+            --error: #ef4444;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -80,6 +85,11 @@
             font-weight: 500;
             font-size: 0.95rem;
             transition: var(--transition);
+            width: 100%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            text-align: left;
         }
 
         .nav-item i { font-size: 1.1rem; width: 20px; text-align: center; }
@@ -95,7 +105,7 @@
 
         .logout-section { padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); }
 
-        .logout-btn { color: #ff7675; background: rgba(255,118,117,0.1); border: none; width: 100%; text-align: left; font-family: inherit; font-size: 0.95rem; }
+        .logout-btn { color: #ff7675; background: rgba(255,118,117,0.1); }
 
         .logout-btn:hover { background: #ff7675; color: white; }
 
@@ -105,6 +115,21 @@
             padding: 40px 50px;
             max-width: calc(100vw - var(--sidebar-width));
         }
+
+        /* --- Global Session Alerts --- */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .alert-success { background: #e6f4ea; color: var(--success); border: 1px solid #ceead6; }
+        .alert-error { background: #fce8e6; color: var(--error); border: 1px solid #fad2cf; }
 
         .card {
             background: var(--card-bg);
@@ -139,7 +164,7 @@
     <aside class="sidebar">
         <div class="logo-section">
             <i class="fa-solid fa-house-user"></i>
-            <span>IPK Boardinghouse</span>
+            <span>IPK Admin</span>
         </div>
 
         <nav class="nav-container">
@@ -171,17 +196,29 @@
         </nav>
 
         <div class="logout-section">
-            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+            <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf
+                <button type="submit" class="nav-item logout-btn">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Log Out System
+                </button>
             </form>
-            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-item logout-btn">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                Log Out System
-            </a>
         </div>
     </aside>
 
     <main class="main-wrapper">
+        @if(session('success'))
+            <div class="alert alert-success">
+                <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-error">
+                <i class="fa-solid fa-circle-exclamation"></i> {{ session('error') }}
+            </div>
+        @endif
+
         @yield('content')
     </main>
 

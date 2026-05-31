@@ -7,19 +7,14 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Public Guest Routes (Unauthenticated)
 |--------------------------------------------------------------------------
-| These do NOT have the auth middleware. This allows unlogged-in users 
-| to see the page, and gives bootstrap/app.php the 'client.login' target it needs!
 */
 Route::get('/client/login', [ClientController::class, 'showLogin'])->name('client.login');
 Route::post('/client/login/submit', [ClientController::class, 'login'])->name('client.login.submit');
-
 
 /*
 |--------------------------------------------------------------------------
 | Protected Resident Routes (Auth Required)
 |--------------------------------------------------------------------------
-| These require an active login session. If a guest tries to access them,
-| bootstrap/app.php catches them and redirects them straight to 'client.login'.
 */
 Route::middleware(['auth'])->prefix('client')->name('client.')->group(function () {
     
@@ -35,6 +30,9 @@ Route::middleware(['auth'])->prefix('client')->name('client.')->group(function (
     
     // 4. Settings (About Us & Help)
     Route::get('/settings', [ClientController::class, 'settingsPage'])->name('settings');
+    
+    // 🌟 Help Desk Route to process the support form data
+    Route::post('/ticket/store', [ClientController::class, 'storeTicket'])->name('ticket.store');
     
     // Session Termination
     Route::get('/logout', [ClientController::class, 'logout'])->name('logout');

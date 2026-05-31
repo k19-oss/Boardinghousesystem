@@ -9,14 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-    Schema::create('rooms', function (Blueprint $table) {
-        $table->id();
-        $table->string('room_number');
-        $table->string('room_type'); // e.g., Premium Solo, Bedspace
-        $table->string('status')->default('Available'); // Available or Occupied
-        $table->timestamps();
+        Schema::create('rooms', function (Blueprint $table) {
+            $table->id();
+            // Added ->unique() to ensure no two rooms share the same number
+            $table->string('room_number')->unique(); 
+            
+            // Stores "Normal" or "Premium"
+            $table->string('room_type'); 
+            
+            // Added price field (using decimal for accurate currency storage)
+            $table->decimal('price', 10, 2); 
+            
+            // Status defaults to Available
+            $table->string('status')->default('Available'); 
+            $table->timestamps();
         });
     }
 
