@@ -12,12 +12,16 @@ class Tenant extends Model
      * @var array
      */
     protected $fillable = [
+<<<<<<< HEAD
         'user_id', // 🌟 Make sure user_id is mass-fillable to link accounts
+=======
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
         'name',
         'phone',
         'room_id',
         'status',
     ];
+<<<<<<< HEAD
 
     /**
      * 🌟 CONNECTION TO PAYMENTS: A tenant can submit multiple payment logs
@@ -44,4 +48,6 @@ class Tenant extends Model
         // Links room_id column on this table to the Room model's primary key
         return $this->belongsTo(Room::class, 'room_id');
     }
+=======
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
 }

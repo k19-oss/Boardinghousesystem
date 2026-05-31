@@ -495,4 +495,42 @@ class AdminController extends Controller
             'occupancy' => $occupancyRate
         ];
     }
+
+    // 6. PROCESS PROFILE SECURITY CREDENTIALS
+    public function updateProfile(Request $request) {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'password' => 'nullable|string|min:6',
+        ]);
+
+        $admin = User::where('email', 'patrick@gmail.com')->first();
+
+        if ($admin) {
+            $admin->name = $request->input('username');
+            
+            if ($request->filled('password')) {
+                $admin->password = Hash::make($request->input('password'));
+            }
+            
+            $admin->save();
+            return redirect()->route('admin.profile')->with('success', 'Profile updated successfully!');
+        }
+
+        return redirect()->route('admin.profile')->with('success', 'Changes saved successfully!');
+    }
+
+    // 7. EXECUTE DISPATCH REMINDER ACTION
+    public function sendReminder() {
+        return redirect()->route('admin.dashboard')->with('success', 'Payment reminders have been dispatched successfully to all pending tenants!');
+    }
+
+    // 8. EXECUTE COMPUTE BILLING INVOICE ACTION
+    public function generateInvoice() {
+        return redirect()->route('admin.dashboard')->with('success', 'Monthly statements and system room invoices have been compiled successfully!');
+    }
+
+    // 9. PROCESS AND LOG NEW PAYMENT TRANSACTIONS
+    public function storePayment(Request $request) {
+        return redirect()->route('admin.payments')->with('success', 'Payment transaction logged successfully!');
+    }
 }

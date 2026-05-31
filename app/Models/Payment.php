@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends Model
 {
+<<<<<<< HEAD
     use HasFactory;
 
     /**
@@ -45,4 +46,17 @@ class Payment extends Model
     {
         return $this->belongsTo(Tenant::class, 'tenant_id');
     }
+=======
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'room_id',
+        'amount',
+        'date',
+        'status',
+    ];
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
 }

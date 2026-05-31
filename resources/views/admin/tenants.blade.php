@@ -1,6 +1,15 @@
 @extends('layouts.admin')
 
 @section('content')
+<<<<<<< HEAD
+=======
+@if(session('success'))
+    <div style="background-color: #e8f5e9; border: 1px solid #00b894; color: #00b894; padding: 12px 20px; border-radius: 10px; margin-bottom: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>{{ session('success') }}</span>
+    </div>
+@endif
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
 
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
     <h1 style="color: var(--primary); font-weight: 800; margin: 0;">Tenant Directory</h1>
@@ -23,11 +32,21 @@
         <tbody id="tenant-table-body">
             @foreach($tenants as $tenant)
             <tr style="border-bottom: 1px solid #f5f5f4; font-size: 0.95rem; color: #2d3436; transition: background 0.2s;">
+<<<<<<< HEAD
                 <td style="padding: 15px 10px; font-weight: 600; color: var(--primary);">{{ $tenant->name }}</td>
                 <td style="padding: 15px 10px;">
                     <span style="font-weight: 700; color: var(--secondary);">Room {{ $tenant->room->room_number ?? 'Unassigned' }}</span>
                 </td>
                 <td style="padding: 15px 10px; color: #636e72;">{{ $tenant->phone }}</td>
+=======
+                <td style="padding: 15px 10px; font-weight: 600; color: var(--primary);">{{ $tenant['name'] }}</td>
+                <td style="padding: 15px 10px;">
+                    <span style="font-weight: 700; color: var(--secondary);">
+                        Room {{ $tenant['room_id'] ?? ($tenant['room'] ?? 'N/A') }}
+                    </span>
+                </td>
+                <td style="padding: 15px 10px; color: #636e72;">{{ $tenant['phone'] }}</td>
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
                 <td style="padding: 15px 10px;">
                     <span style="padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 800;
                         background: {{ $tenant->status == 'Active' ? '#e3fcef' : '#fff5f5' }};

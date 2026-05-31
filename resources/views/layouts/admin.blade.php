@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+=======
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
     <title>IPK Boardinghouse System - @yield('title')</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -164,7 +167,11 @@
     <aside class="sidebar">
         <div class="logo-section">
             <i class="fa-solid fa-house-user"></i>
+<<<<<<< HEAD
             <span>IPK Admin</span>
+=======
+            <span>IPK Boardinghouse</span>
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
         </div>
 
         <nav class="nav-container">

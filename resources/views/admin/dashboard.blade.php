@@ -3,11 +3,19 @@
 @section('title', 'IPK Boardinghouse System - Dashboard')
 
 @section('content')
+<<<<<<< HEAD
+=======
+<!-- Micro-interaction Stylesheets Integration -->
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
 <style>
     /* Global Base Transition Setup for Interacting Elements */
     .btn-hover-action,
     .btn-report-action,
     .metric-card-node,
+<<<<<<< HEAD
+=======
+    .quick-action-row,
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
     .view-all-link,
     .data-table-row {
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -15,7 +23,11 @@
 
     /* 1. Header Control Buttons */
     .btn-hover-action:hover {
+<<<<<<< HEAD
         background: #271815 !important;
+=======
+        background: #271815 !important; /* Richer deep brown shift */
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(62, 39, 35, 0.2);
     }
@@ -41,7 +53,11 @@
 
     /* 3. Text Anchor Controls */
     .view-all-link:hover {
+<<<<<<< HEAD
         color: #78350f !important;
+=======
+        color: #78350f !important; /* Slightly deeper gold */
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
         text-decoration: underline !important;
     }
 
@@ -50,6 +66,7 @@
         background-color: #faf9f9 !important;
     }
 
+<<<<<<< HEAD
     /* Custom Scrollbar for the System Containers */
     .custom-scroll-area::-webkit-scrollbar {
         width: 6px;
@@ -70,6 +87,16 @@
 {{-- Persistent AJAX Toast Response Target Banner --}}
 <div id="ajax-status-alert-container" style="display: none; transition: all 0.3s ease;"></div>
 
+=======
+    /* 5. Right Column Action Links */
+    .quick-action-row:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+        border-color: rgba(255, 255, 255, 0.3) !important;
+        padding-left: 16px !important; /* Smooth internal text nudge */
+    }
+</style>
+
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
 @if(session('success'))
     <div style="background-color: #e8f5e9; border: 1px solid #a3e635; color: #2ecc71; padding: 14px 20px; border-radius: 12px; margin-bottom: 25px; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
         <i class="fa-solid fa-circle-check"></i>
@@ -83,6 +110,7 @@
         <p style="color: #636e72; font-size: 0.9rem; margin: 5px 0 0 0;">Welcome back, Admin. Here is what's happening today.</p>
     </div>
     <div style="display: flex; gap: 12px;">
+<<<<<<< HEAD
         <a href="{{ Route::has('admin.create-tenant') ? route('admin.create-tenant') : '#' }}" class="btn-hover-action" style="background: #3E2723; color: #ffffff; padding: 10px 18px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
             <i class="fa-solid fa-user-plus"></i> New Tenant
         </a>
@@ -90,6 +118,14 @@
         <a href="#" onclick="executeQuickAction(event, '{{ Route::has('admin.generateInvoice') ? route('admin.generateInvoice') : '#' }}', 'Room Invoices generated and reports compiled successfully.')" class="btn-report-action" style="background: #ffffff; color: #3E2723; border: 1px solid #e0e0e0; padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none;">
             <i class="fa-solid fa-file-invoice"></i> Reports / Invoice
         </a>
+=======
+        <a href="{{ route('admin.create-tenant') }}" class="btn-hover-action" style="background: #3E2723; color: #ffffff; padding: 10px 18px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <i class="fa-solid fa-user-plus"></i> New Tenant
+        </a>
+        <button class="btn-report-action" style="background: #ffffff; color: #3E2723; border: 1px solid #e0e0e0; padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
+            <i class="fa-solid fa-download"></i> Reports
+        </button>
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
     </div>
 </div>
 
@@ -141,6 +177,7 @@
     <div class="card" style="background: #ffffff; padding: 24px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <h3 style="color: #3E2723; font-size: 1.1rem; font-weight: 700; margin: 0;"><i class="fa-solid fa-list-ul" style="margin-right: 8px; color: #8d6e63;"></i> Recent Activities</h3>
+<<<<<<< HEAD
         </div>
         
         {{-- MATCHING SCROLL WRAPPER & STACKED LAYOUT (380px) --}}
@@ -155,6 +192,28 @@
                             </div>
                             <div style="font-size: 0.75rem; color: #78716c; margin-top: 2px;">
                                 {{ data_get($due, 'room') ?? data_get($due, 'room_number') ?? 'N/A' }} • {{ \Carbon\Carbon::parse(data_get($due, 'date'))->format('M d, Y') }}
+=======
+            <a href="#" class="view-all-link" style="font-size: 0.8rem; color: #b45309; text-decoration: none; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">View All</a>
+        </div>
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="text-align: left; color: #a3a3a3; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; border-bottom: 1px solid #f5f5f4;">
+                    <th style="padding: 12px;">TENANT / ROOM</th>
+                    <th style="padding: 12px;">DATE</th>
+                    <th style="padding: 12px;">AMOUNT</th>
+                    <th style="padding: 12px; text-align: right;">STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($upcomingDues as $due)
+                <tr class="data-table-row" style="border-bottom: 1px solid #fafaf9;">
+                    <td style="padding: 14px 12px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background: #efebe9; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: #3E2723; font-weight: 600;">👤</div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 0.9rem; color: #2d2d2d;">Active Account</div>
+                                <div style="font-size: 0.75rem; color: #78716c; margin-top: 2px;">{{ $due['room'] }}</div>
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
                             </div>
                         </div>
                     </div>
@@ -182,6 +241,21 @@
 
     {{-- ================= RIGHT COLUMN: SYSTEM ALERTS ================= --}}
     <div style="display: flex; flex-direction: column; gap: 25px;">
+<<<<<<< HEAD
+=======
+        <div class="card" style="background: #3E2723; color: #ffffff; padding: 24px; border-radius: 20px; box-shadow: 0 10px 15px -3px rgba(62, 39, 35, 0.15);">
+            <h4 style="margin: 0 0 15px 0; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;"><i class="fa-solid fa-bolt" style="color: #fbbf24; margin-right: 6px;"></i> Quick Actions</h4>
+            <div style="display: grid; gap: 10px;">
+                <a href="{{ route('admin.sendReminder') }}" class="quick-action-row" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #f5f5f4; padding: 12px; border-radius: 10px; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-envelope" style="color: #fbbf24;"></i> Send Payment Reminder
+                </a>
+                <a href="{{ route('admin.generateInvoice') }}" class="quick-action-row" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #f5f5f4; padding: 12px; border-radius: 10px; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-print" style="color: #fbbf24;"></i> Generate Room Invoice
+                </a>
+            </div>
+        </div>
+        
+>>>>>>> 0c223bd492001434a0baf1bdce431350fcbb7e5b
         <div class="card" style="background: #ffffff; padding: 24px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #f5f5f4;">
             <h4 style="margin: 0 0 15px 0; color: #3E2723; font-size: 1rem; font-weight: 700;"><i class="fa-solid fa-bullhorn" style="color: #8d6e63; margin-right: 6px;"></i> System Alerts</h4>
             
