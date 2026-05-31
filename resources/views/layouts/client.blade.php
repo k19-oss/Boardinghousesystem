@@ -122,12 +122,18 @@
         </a>
 
         <a href="{{ route('client.settings') }}" class="nav-item {{ Route::is('client.settings') ? 'active' : '' }}">
-            <i class="fas fa-sliders"></i> Portal Settings
+            <i class="fas fa-sliders-h"></i> Portal Settings
         </a>
 
         <div style="position: absolute; bottom: 30px; width: 220px; left: 20px; box-sizing: border-box;">
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px;">
-            <a href="{{ route('client.logout') }}" class="nav-item" style="color: #ff7675; background: rgba(255,118,117,0.05);">
+            
+            <form id="logout-form" action="{{ route('client.logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+
+            <a href="#" class="nav-item" style="color: #ff7675; background: rgba(255,118,117,0.05);"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fas fa-power-off"></i> Logout
             </a>
         </div>

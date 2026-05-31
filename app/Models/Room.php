@@ -14,6 +14,7 @@ class Room extends Model
     protected $fillable = [
         'room_number',
         'price',
+        'room_type', // <-- Added to allow mass-assignment
         'status',
     ];
 }

@@ -12,7 +12,6 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         
-        // 🌟 LINK YOUR CLIENT.PHP FILE TO THE SYSTEM HERE:
         then: function () {
             Route::middleware('web')
                 ->group(__DIR__.'/../routes/client.php');
@@ -28,8 +27,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 return route('client.login'); 
             }
             
-            // Otherwise, let it fall back to your normal admin/default login
-            return route('login'); 
+            // 💡 FIXED: Changed from 'login' to 'admin.login' to match your actual admin login route
+            return route('admin.login'); 
         });
 
     })

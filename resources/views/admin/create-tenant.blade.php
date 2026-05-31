@@ -8,34 +8,59 @@
     <h1 style="color: var(--primary); font-weight: 800; margin: 0;">Register New Tenant</h1>
 </div>
 
-<div class="card" style="background: white; border-radius: 20px; padding: 40px; max-width: 600px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02);">
+{{-- Display system validation errors if anything goes wrong --}}
+@if ($errors->any())
+    <div style="background-color: #fff5f5; border: 1px solid #ff7675; color: #ff7675; padding: 15px; border-radius: 10px; max-width: 600px; margin-bottom: 20px; font-weight: 600; font-size: 0.9rem; box-sizing: border-box;">
+        <ul style="margin: 0; padding-left: 20px;">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<div class="card" style="background: white; border-radius: 20px; padding: 40px; max-width: 600px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02); box-sizing: border-box;">
     <form action="{{ route('admin.tenants.store') }}" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
         @csrf
+        
+        {{-- SECTION: PROFILE DATA --}}
         <div>
             <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; text-transform: uppercase;">Full Name</label>
-            <input type="text" name="name" required placeholder="e.g. John Doe" style="width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid #dcdde1; font-family: inherit; font-size: 0.95rem;">
+            <input type="text" name="name" value="{{ old('name') }}" required placeholder="e.g. John Doe" style="width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid #dcdde1; font-family: inherit; font-size: 0.95rem; box-sizing: border-box;">
         </div>
 
         <div>
             <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; text-transform: uppercase;">Contact Number</label>
-            <input type="text" name="phone" required placeholder="e.g. 0912-345-6789" style="width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid #dcdde1; font-family: inherit; font-size: 0.95rem;">
+            <input type="text" name="phone" value="{{ old('phone') }}" required placeholder="e.g. 0912-345-6789" style="width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid #dcdde1; font-family: inherit; font-size: 0.95rem; box-sizing: border-box;">
         </div>
 
         <div>
             <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; text-transform: uppercase;">Assign Room Number</label>
-            <select name="room_id" required style="width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid #dcdde1; font-family: inherit; font-size: 0.95rem; background-color: white;">
-                <option value="" disabled selected>Select an available room...</option>
-                <option value="101">Room 101 (Premium Solo)</option>
-                <option value="102">Room 102 (Bedspace)</option>
-                <option value="103">Room 103</option>
-                <option value="201">Room 201</option>
-                <option value="202">Room 202</option>
-                <option value="203">Room 203</option>
+            <select name="room_id" style="width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid #dcdde1; font-family: inherit; font-size: 0.95rem; background-color: white; box-sizing: border-box;">
+                <option value="" selected>Leave Unassigned / Select Later...</option>
+                {{-- 👍 GENERATING OPTIONS DYNAMICALLY FROM DATABASE VIA CONTROLLER RECORD STACK --}}
+                @foreach($availableRooms as $room)
+                    <option value="{{ $room->id }}" {{ old('room_id') == $room->id ? 'selected' : '' }}>
+                        Room {{ $room->room_number }} (₱{{ number_format($room->price, 2) }}/mo)
+                    </option>
+                @endforeach
             </select>
         </div>
 
-        <button type="submit" class="btn-primary" style="background: var(--primary); color: white; padding: 14px; border-radius: 10px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <i class="fa-solid fa-user-plus"></i> Complete Registration
+        {{-- 👇 NEW SECTION: ACCOUNT LOG-IN DETAILS FOR THE CLIENT PORTAL --}}
+        <div style="border-top: 2px solid #f5f5f4; padding-top: 15px; margin-top: 5px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; text-transform: uppercase;">Portal Login Email</label>
+            <input type="email" name="email" value="{{ old('email') }}" required placeholder="tenant@email.com" style="width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid #dcdde1; font-family: inherit; font-size: 0.95rem; box-sizing: border-box;">
+            <small style="color: #636e72; font-size: 0.8rem; margin-top: 4px; display: block;">This will be their unique username for logging into the system.</small>
+        </div>
+
+        <div>
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; text-transform: uppercase;">Portal Password</label>
+            <input type="password" name="password" required placeholder="Minimum 6 characters" style="width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid #dcdde1; font-family: inherit; font-size: 0.95rem; box-sizing: border-box;">
+        </div>
+
+        <button type="submit" class="btn-primary" style="background: var(--primary); color: white; padding: 14px; border-radius: 10px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;">
+            <i class="fa-solid fa-user-plus"></i> Complete Registration & Provision Access
         </button>
     </form>
 </div>

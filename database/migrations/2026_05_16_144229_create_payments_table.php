@@ -9,15 +9,27 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-    Schema::create('payments', function (Blueprint $table) {
-        $table->id();
-        $table->string('room_number'); // Links the payment to a room
-        $table->string('date');        // e.g., 'Oct 25, 2026'
-        $table->decimal('amount', 10, 2);
-        $table->string('status');      // Paid, Pending, or Overdue
-        $table->timestamps();
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id();
+            
+            // Core Relational Tracking
+            // Constrained assumes you have a 'tenants' table
+            // Example: If your tenants table uses 'tenant_code' as the primary key
+            $table->foreignId('tenant_id')->nullable()->constrained()->onDelete('cascade');
+            $table->string('room_number'); 
+            
+            // Financial Data
+            $table->dateTime('date'); 
+            $table->decimal('amount', 10, 2);
+            $table->string('status')->default('pending'); // Default to pending
+            
+            // Online/Digital Payment Auditing
+            $table->string('reference_number')->nullable(); 
+            $table->string('receipt_path')->nullable(); 
+            
+            $table->timestamps();
         });
     }
 

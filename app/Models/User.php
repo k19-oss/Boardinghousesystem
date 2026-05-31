@@ -46,4 +46,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * 🌟 DYNAMIC LINK: Connect the User to their Tenant Profile details
+     */
+    public function tenantProfile()
+    {
+        // Links this user account to the 'Tenant' model using 'user_id' as the foreign key
+        return $this->hasOne(Tenant::class, 'user_id');
+    }
 }
